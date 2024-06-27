@@ -351,7 +351,7 @@ class _Screen3State extends State<Screen3> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          top: 5, left: 2),
+                                          top: 6, left: 2),
                                       child: SizedBox(
                                         width: 60.w,
                                         height: 19.h,
