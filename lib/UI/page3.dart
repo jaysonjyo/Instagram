@@ -40,7 +40,7 @@ class _Screen3State extends State<Screen3> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
+      appBar: AppBar(automaticallyImplyLeading: false,
         backgroundColor: Colors.black,
         title: Padding(
           padding: const EdgeInsets.only(left: 20),
@@ -48,7 +48,8 @@ class _Screen3State extends State<Screen3> {
             widget.dp,
             style: TextStyle(color: Colors.white),
           ),
-        ),
+        ),leading: GestureDetector(onTap: (){Navigator.of(context).pop();},
+            child: Icon(Icons.arrow_back_ios_new_rounded,color: Colors.white,)),
       ),
       body: SingleChildScrollView(
         child: BlocBuilder<InstaBloc, InstaState>(

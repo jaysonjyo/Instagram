@@ -180,31 +180,35 @@ class _Screen2State extends State<Screen2> {
                               return ListView.separated(
                                   itemCount: lasted.data!.items!.length,
                                   itemBuilder: (context, position) {
-                                    return Container(
-                                      child: Row(
-                                        children: [
-                                          CircleAvatar(
-                                              radius: 30.r,
-                                              backgroundImage: NetworkImage(
-                                                  lasted.data!.items![position]
-                                                      .profilePicUrl
-                                                      .toString())),
-                                          SizedBox(
-                                            width: 20.w,
-                                          ),
-                                          SizedBox( width: 150.w,height: 20.h,
-                                            child: Text(
-                                              lasted
-                                                  .data!.items![position].fullName
-                                                  .toString(),
-                                              style: GoogleFonts.lato(
-                                                  textStyle: TextStyle(
-                                                fontSize: 17.sp,
-                                                fontWeight: FontWeight.w500,
-                                              )),
+                                    return GestureDetector(onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (_)=>Screen3(dp:  last.data!.items![position]
+                                        .username
+                                        .toString(),)));},
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                                radius: 30.r,
+                                                backgroundImage: NetworkImage(
+                                                    lasted.data!.items![position]
+                                                        .profilePicUrl
+                                                        .toString())),
+                                            SizedBox(
+                                              width: 20.w,
                                             ),
-                                          )
-                                        ],
+                                            SizedBox( width: 150.w,height: 20.h,
+                                              child: Text(
+                                                lasted
+                                                    .data!.items![position].fullName
+                                                    .toString(),
+                                                style: GoogleFonts.lato(
+                                                    textStyle: TextStyle(
+                                                  fontSize: 17.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                )),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     );
                                   },
