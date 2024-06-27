@@ -9,7 +9,9 @@ class InstaApi {
   Future<InstagramModel> getInstagram(String id) async {
     String trendingpath =
         'https://instagram-scraper-api2.p.rapidapi.com/v1/info?username_or_id_or_url=$id';
-    var body = {};
+    var body = {
+      
+    };
     Response response = await apiClient.invokeAPI(trendingpath, 'GET', body);
 
     return InstagramModel.fromJson(jsonDecode(response.body));

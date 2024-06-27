@@ -388,7 +388,7 @@ class _Screen1State extends State<Screen1> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 5),
+                                      padding: const EdgeInsets.only(top: 5,left: 8),
                                       child: SizedBox(
                                         width: 60.w,
                                         height: 19.h,
@@ -476,7 +476,7 @@ class _Screen1State extends State<Screen1> {
                                 }
                                 if (state is postBlocError) {
                                   return Center(
-                                    child: Text("Error"),
+                                     child: Text("Error"),
                                   );
                                 }
                                 if (state is postBlocLoaded) {
