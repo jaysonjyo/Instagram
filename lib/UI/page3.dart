@@ -2,69 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:instagram/Repostory/ModelClass/FollowersModel.dart';
-import 'package:instagram/Repostory/ModelClass/InstagramModel.dart';
 import 'package:instagram/Repostory/ModelClass/TagModel.dart';
-import 'package:instagram/UI/page2.dart';
 
 import '../Bloc/highlight_bloc.dart';
 import '../Bloc/insta_bloc.dart';
 import '../Bloc/post_bloc.dart';
 import '../Bloc/tag_bloc.dart';
+import '../Repostory/ModelClass/InstagramModel.dart';
 import '../Repostory/ModelClass/PostModels.dart';
 import '../Repostory/ModelClass/highlightModel.dart';
 
-class Screen1 extends StatefulWidget {
-  const Screen1({super.key,});
+class Screen3 extends StatefulWidget {
+  final String dp;
+
+  const Screen3({super.key, required this.dp});
 
   @override
-  State<Screen1> createState() => _Screen1State();
+  State<Screen3> createState() => _Screen3State();
 }
 
-class _Screen1State extends State<Screen1> {
-  late InstagramModel instagram;
-  late HighlightModel highlightid;
-  late PostModels posts;
-  late TagModel tagedpost;
-  TextEditingController controller = TextEditingController();
+class _Screen3State extends State<Screen3> {
+  late InstagramModel model;
+  late HighlightModel high;
+  late PostModels po;
+  late TagModel tg;
+  @override
+  void initState() {
+    BlocProvider.of<InstaBloc>(context).add(FetchInstaEvent(id: widget.dp));
+    BlocProvider.of<HighlightBloc>(context).add(FetchHighlightEvent( Highlights: widget.dp));
+    BlocProvider.of<PostBloc>(context).add(FetchpostEvent(post: widget.dp));
+    BlocProvider.of<TagBloc>(context).add(FetchTagEvent(tag:widget.dp),);
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          //Colors.yellow
-          Color(0xFF212121),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: TextField(
-          style: TextStyle(color: Colors.white),
-          controller: controller,
-          onSubmitted: (value) {
-            BlocProvider.of<InstaBloc>(context)
-                .add(FetchInstaEvent(id: controller.text));
-            BlocProvider.of<PostBloc>(context)
-                .add(FetchpostEvent(post: controller.text));
-            BlocProvider.of<HighlightBloc>(context).add(
-              FetchHighlightEvent(Highlights: controller.text),
-            );
-            BlocProvider.of<TagBloc>(context).add(
-              FetchTagEvent(tag: controller.text),
-            );
-          },
-          decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-                borderSide: BorderSide(color: Colors.white),
-              ),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(color: Colors.pink)),
-              hintText: "Search",
-              prefixIcon: Icon(
-                Icons.search_outlined,
-                color: Colors.white,
-              ),
-              hintStyle: TextStyle(color: Colors.white)),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text(
+            widget.dp,
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -81,7 +64,9 @@ class _Screen1State extends State<Screen1> {
               );
             }
             if (state is InstaBlocLoaded) {
-              instagram = BlocProvider.of<InstaBloc>(context).instagramModel;
+              model = BlocProvider
+                  .of<InstaBloc>(context)
+                  .instagramModel;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -92,7 +77,7 @@ class _Screen1State extends State<Screen1> {
                         CircleAvatar(
                           radius: 50.r,
                           backgroundImage: NetworkImage(
-                              instagram.data!.profilePicUrlHd.toString()),
+                              model.data!.profilePicUrlHd.toString()),
                         ),
                         SizedBox(
                           width: 25.w,
@@ -100,7 +85,7 @@ class _Screen1State extends State<Screen1> {
                         Column(
                           children: [
                             Text(
-                              instagram.data!.mediaCount.toString(),
+                              model.data!.mediaCount.toString(),
                               style: GoogleFonts.inter(
                                 textStyle: TextStyle(
                                   color: Colors.white,
@@ -124,80 +109,56 @@ class _Screen1State extends State<Screen1> {
                         SizedBox(
                           width: 20.w,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => Screen2(
-                                      followerid:
-                                          instagram.data!.username.toString(),
-                                      followingid:
-                                          instagram.data!.username.toString(),
-                                      index: 0,
-                                    )));
-                          },
-                          child: Column(
-                            children: [
-                              Text(
-                                instagram.data!.followerCount.toString(),
-                                style: GoogleFonts.inter(
-                                  textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25.64.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                        Column(
+                          children: [
+                            Text(
+                              model.data!.followerCount.toString(),
+                              style: GoogleFonts.inter(
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25.64.sp,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              Text(
-                                'Followers',
-                                style: GoogleFonts.inter(
-                                  textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 23.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                            ),
+                            Text(
+                              'Followers',
+                              style: GoogleFonts.inter(
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 23.sp,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           width: 20.w,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => Screen2(
-                                  followerid:
-                                      instagram.data!.username.toString(),
-                                  followingid:
-                                      instagram.data!.username.toString(),
-                                  index: 1),
-                            ));
-                          },
-                          child: Column(
-                            children: [
-                              Text(
-                                instagram.data!.followingCount.toString(),
-                                style: GoogleFonts.inter(
-                                  textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25.64.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                        Column(
+                          children: [
+                            Text(
+                              model.data!.followingCount.toString(),
+                              style: GoogleFonts.inter(
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25.64.sp,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              Text(
-                                'Following',
-                                style: GoogleFonts.inter(
-                                  textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 23.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                            ),
+                            Text(
+                              'Following',
+                              style: GoogleFonts.inter(
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 23.sp,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -205,7 +166,7 @@ class _Screen1State extends State<Screen1> {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, top: 20),
                     child: Text(
-                      instagram.data!.fullName.toString(),
+                      model.data!.fullName.toString(),
                       style: GoogleFonts.inter(
                         textStyle: TextStyle(
                           color: Colors.white,
@@ -342,27 +303,27 @@ class _Screen1State extends State<Screen1> {
                   SizedBox(
                     height: 25.h,
                   ),
-                  SizedBox(
-                    height: 110.h,
-                    width: 500.w,
-                    child: BlocBuilder<HighlightBloc, HighlightState>(
-                      builder: (context, state) {
-                        if (state is HighlightBlocLoading) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (state is HighlightBlocError) {
-                          return Center(
-                            child: Text("Error"),
-                          );
-                        }
-                        if (state is HighlightBlocLoaded) {
-                          highlightid = BlocProvider.of<HighlightBloc>(context)
-                              .highlightModel;
-
-                          return ListView.separated(
-                            itemCount: highlightid.data!.items!.length,
+                  BlocBuilder<HighlightBloc, HighlightState>(
+                    builder: (context, state) {
+                      if (state is HighlightBlocLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (state is HighlightBlocError) {
+                        return Center(
+                          child: Text("Error"),
+                        );
+                      }
+                      if (state is HighlightBlocLoaded) {
+                        high = BlocProvider
+                            .of<HighlightBloc>(context)
+                            .highlightModel;
+                        return SizedBox(
+                          height: 110.h,
+                          width: 500.w,
+                          child: ListView.separated(
+                            itemCount: high.data!.items!.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, position) {
                               return Container(
@@ -377,24 +338,24 @@ class _Screen1State extends State<Screen1> {
                                         child: CircleAvatar(
                                           radius: 34.r,
                                           backgroundImage: NetworkImage(
-                                              highlightid
-                                                  .data!
-                                                  .items![position]
-                                                  .coverMedia!
-                                                  .croppedImageVersion!
-                                                  .url
-                                                  .toString()),
+                                              high
+                                              .data!
+                                              .items![position]
+                                              .coverMedia!
+                                              .croppedImageVersion!
+                                              .url
+                                              .toString()),
                                         ),
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 5),
+                                      padding: const EdgeInsets.only(
+                                          top: 5, left: 2),
                                       child: SizedBox(
                                         width: 60.w,
                                         height: 19.h,
                                         child: Text(
-                                          highlightid
-                                              .data!.items![position].title
+                                          high.data!.items![position].title
                                               .toString(),
                                           style: GoogleFonts.inter(
                                             textStyle: TextStyle(
@@ -416,15 +377,12 @@ class _Screen1State extends State<Screen1> {
                                 width: 10.w,
                               );
                             },
-                          );
-                        } else {
-                          return SizedBox();
-                        }
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
+                          ),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    },
                   ),
                   Divider(
                     thickness: 1,
@@ -468,89 +426,41 @@ class _Screen1State extends State<Screen1> {
                           height: 650.h,
                           child: TabBarView(children: [
                             BlocBuilder<PostBloc, PostState>(
-                              builder: (context, state) {
+                                builder: (context, state) {
                                 if (state is postBlocLoading) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
+                                return Center(
+                                child: CircularProgressIndicator(),
+                                );
                                 }
                                 if (state is postBlocError) {
-                                  return Center(
-                                    child: Text("Error"),
-                                  );
+                                return Center(
+                                child: Text("Error"),
+                                );
                                 }
                                 if (state is postBlocLoaded) {
-                                  posts = BlocProvider.of<PostBloc>(context)
-                                      .postModels;
-                                  return SizedBox(
-                                    height: 300.h,
-                                    width: 500.w,
-                                    child: GridView.count(
-                                      physics: NeverScrollableScrollPhysics(),
-                                      crossAxisCount: 3,
-                                      crossAxisSpacing: 1.0,
-                                      mainAxisSpacing: 1.0,
-                                      shrinkWrap: true,
-                                      children: List.generate(
-                                        posts.data!.items!.length,
-                                        (index) {
-                                          return Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              image: DecorationImage(
-                                                image: NetworkImage(posts
-                                                    .data!
-                                                    .items![index]
-                                                    .imageVersions!
-                                                    .items![0]
-                                                    .url
-                                                    .toString()),
-                                                fit: BoxFit.cover,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(1),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  return SizedBox();
-                                }
-                              },
-                            ),
-                            BlocBuilder<TagBloc, TagState>(
-                              builder: (context, state) {
-                                if (state is TagBlocLoading) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                                if (state is TagBlocError) {
-                                  return Center(
-                                    child: Text("Error"),
-                                  );
-                                }
-                                if (state is TagBlocLoaded) {
-                                  tagedpost = BlocProvider.of<TagBloc>(context)
-                                      .tagModel;
-                                  return GridView.count(
+                                po = BlocProvider.of<PostBloc>(context)
+                                    .postModels;
+                                return SizedBox( height: 300.h,
+                                  width: 500.w,
+                                  child: GridView.count(
                                     physics: NeverScrollableScrollPhysics(),
                                     crossAxisCount: 3,
                                     crossAxisSpacing: 1.0,
                                     mainAxisSpacing: 1.0,
                                     shrinkWrap: true,
                                     children: List.generate(
-                                      tagedpost.data!.items!.length,
-                                      (index) {
+                                      po.data!.items!.length,
+                                          (index) {
                                         return Container(
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                             image: DecorationImage(
-                                              image: NetworkImage(
-                                              tagedpost.data!.items![index].displayUrl.toString()),
+                                              image: NetworkImage(po.data!
+                                                  .items![index]
+                                                  .imageVersions!
+                                                  .items![0]
+                                                  .url
+                                                  .toString()),
                                               fit: BoxFit.cover,
                                             ),
                                             borderRadius: BorderRadius.all(
@@ -560,11 +470,54 @@ class _Screen1State extends State<Screen1> {
                                         );
                                       },
                                     ),
-                                  );
-                                } else {
-                                  return SizedBox();
-                                }
+                                  ),
+                                );}else{return SizedBox();}
                               },
+                            ),
+                            SizedBox(
+                              height: 300.h,
+                              width: 500.w,
+                              child: BlocBuilder<TagBloc, TagState>(
+    builder: (context, state) {
+    if (state is TagBlocLoading) {
+    return Center(
+    child: CircularProgressIndicator(),
+    );
+    }
+    if (state is TagBlocError) {
+    return Center(
+    child: Text("Error"),
+    );
+    }
+    if (state is TagBlocLoaded) {
+    tg = BlocProvider.of<TagBloc>(context)
+        .tagModel;
+                                  return GridView.count(
+                                physics: NeverScrollableScrollPhysics(),
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 1.0,
+                                mainAxisSpacing: 1.0,
+                                shrinkWrap: true,
+                                children: List.generate(
+                                  tg.data!.items!.length,
+                                      (index) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        image: DecorationImage(
+                                          image: NetworkImage( tg.data!.items![index].displayUrl.toString()),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(1),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );}else{return SizedBox();}
+  },
+),
                             ),
                           ]),
                         )

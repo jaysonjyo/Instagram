@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram/UI/page1.dart';
 
+import 'Bloc/followers_bloc.dart';
+import 'Bloc/following_bloc.dart';
 import 'Bloc/highlight_bloc.dart';
 import 'Bloc/insta_bloc.dart';
 import 'Bloc/post_bloc.dart';
+import 'Bloc/tag_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,6 +36,15 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => PostBloc(),
+              ),
+              BlocProvider(
+                create: (context) => FollowersBloc(),
+              ),
+              BlocProvider(
+                create: (context) => FollowingBloc(),
+              ),
+              BlocProvider(
+                create: (context) => TagBloc(),
               ),
             ],
             child: MaterialApp(
