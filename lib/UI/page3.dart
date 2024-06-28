@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:instagram/Repostory/ModelClass/TagModel.dart';
+import 'package:instagram/UI/page2.dart';
 
 import '../Bloc/highlight_bloc.dart';
 import '../Bloc/insta_bloc.dart';
@@ -110,56 +111,61 @@ class _Screen3State extends State<Screen3> {
                         SizedBox(
                           width: 20.w,
                         ),
-                        Column(
-                          children: [
-                            Text(
-                              model.data!.followerCount.toString(),
-                              style: GoogleFonts.inter(
-                                textStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25.64.sp,
-                                  fontWeight: FontWeight.w500,
+                        GestureDetector(onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (_)=>Screen2(followerid: widget.dp,
+                            index: 0, followingid: widget.dp,)));},
+                          child: Column(
+                            children: [
+                              Text(
+                                model.data!.followerCount.toString(),
+                                style: GoogleFonts.inter(
+                                  textStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25.64.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              'Followers',
-                              style: GoogleFonts.inter(
-                                textStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 23.sp,
-                                  fontWeight: FontWeight.w400,
+                              Text(
+                                'Followers',
+                                style: GoogleFonts.inter(
+                                  textStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 23.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         SizedBox(
                           width: 20.w,
                         ),
-                        Column(
-                          children: [
-                            Text(
-                              model.data!.followingCount.toString(),
-                              style: GoogleFonts.inter(
-                                textStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25.64.sp,
-                                  fontWeight: FontWeight.w500,
+                        GestureDetector(onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (_)=>Screen2(followerid: widget.dp,index: 1, followingid: widget.dp,)));},
+                          child: Column(
+                            children: [
+                              Text(
+                                model.data!.followingCount.toString(),
+                                style: GoogleFonts.inter(
+                                  textStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25.64.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              'Following',
-                              style: GoogleFonts.inter(
-                                textStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 23.sp,
-                                  fontWeight: FontWeight.w400,
+                              Text(
+                                'Following',
+                                style: GoogleFonts.inter(
+                                  textStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 23.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),

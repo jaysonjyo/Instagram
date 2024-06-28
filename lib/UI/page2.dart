@@ -37,8 +37,8 @@ class _Screen2State extends State<Screen2> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
+    return Scaffold(backgroundColor: Colors.white,
+        appBar: AppBar(backgroundColor: Colors.white,
           title: Text("All  followers",
               style: GoogleFonts.lato(
                   textStyle: TextStyle(
