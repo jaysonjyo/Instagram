@@ -36,7 +36,7 @@ class _Screen1State extends State<Screen1> {
           Color(0xFF212121),
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: TextField(
+        title: TextField(cursorColor: Colors.white,
           style: TextStyle(color: Colors.white),
           controller: controller,
           onSubmitted: (value) {
@@ -67,12 +67,13 @@ class _Screen1State extends State<Screen1> {
               hintStyle: TextStyle(color: Colors.white)),
         ),
       ),
+
       body: SingleChildScrollView(
         child: BlocBuilder<InstaBloc, InstaState>(
           builder: (context, state) {
             if (state is InstaBlocLoading) {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: Colors.grey,backgroundColor: Colors.white,),
               );
             }
             if (state is InstaBlocError) {

@@ -37,8 +37,9 @@ class _Screen2State extends State<Screen2> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white,
-        appBar: AppBar(backgroundColor: Colors.white,
+    return Scaffold(backgroundColor: Colors.black,
+        appBar: AppBar(backgroundColor: Colors.
+          black,
           title: Text("All  followers",
               style: GoogleFonts.lato(
                   textStyle: TextStyle(
@@ -54,19 +55,19 @@ class _Screen2State extends State<Screen2> {
                 Container(
                   width: 500.w,
                   height: 50.h,
-                  color: Colors.white,
+                  color: Colors.black,
                   child: TabBar(
                     indicatorSize: TabBarIndicatorSize.tab,
                     dividerHeight: 1,
-                    indicatorColor: Colors.black,
-                    labelColor: Colors.white,
+                    indicatorColor: Colors.white,
+                    labelColor: Colors.black,
                     tabs: [
                       Tab(
                           child: Text(
                         "Followers",
                         style: GoogleFonts.inter(
                           textStyle: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontSize: 23.sp,
                             fontWeight: FontWeight.w400,
                           ),
@@ -77,7 +78,7 @@ class _Screen2State extends State<Screen2> {
                         "Following",
                         style: GoogleFonts.inter(
                           textStyle: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontSize: 23.sp,
                             fontWeight: FontWeight.w400,
                           ),
@@ -138,6 +139,7 @@ class _Screen2State extends State<Screen2> {
                                                     .toString(),
                                                 style: GoogleFonts.lato(
                                                     textStyle: TextStyle(
+                                                      color: Colors.white,
                                                   fontSize: 17.sp,
                                                   fontWeight: FontWeight.w500,
                                                 )),
@@ -202,6 +204,7 @@ class _Screen2State extends State<Screen2> {
                                                     .toString(),
                                                 style: GoogleFonts.lato(
                                                     textStyle: TextStyle(
+                                                      color: Colors.white,
                                                   fontSize: 17.sp,
                                                   fontWeight: FontWeight.w500,
                                                 )),

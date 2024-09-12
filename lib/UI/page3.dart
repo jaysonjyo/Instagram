@@ -57,7 +57,7 @@ class _Screen3State extends State<Screen3> {
           builder: (context, state) {
             if (state is InstaBlocLoading) {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: Colors.grey,backgroundColor: Colors.white,),
               );
             }
             if (state is InstaBlocError) {
